@@ -120,7 +120,8 @@ h1, h2 {
 .ribbon {
   position: fixed;
   bottom: 0;
-  width: 35%;
+  width: 100%;
+  max-width: 330px;
   background-color: #ff7f50;
   text-align: center;
   padding: 10px 0;
@@ -128,7 +129,7 @@ h1, h2 {
   justify-content: center;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  gap: 13px;
+  gap: 20px;
 }
 
 .ribbon a {
