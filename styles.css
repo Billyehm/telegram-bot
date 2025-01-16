@@ -18,7 +18,7 @@ h1, h2 {
 .container {
   max-width: 300px;
   padding: 20px;
-  margin: 20px;
+  margin: 15px;
   border: 2px solid #ff7f50;
   border-radius: 8px;
   background-color: #1a1a1a;
@@ -28,8 +28,8 @@ h1, h2 {
 .recovery-phrase {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-bottom: 18px;
+  gap: 6px;
+  margin-bottom: 12px;
 }
 
 .recovery-phrase div {
@@ -53,7 +53,7 @@ h1, h2 {
 }
 
 .notes {
-  margin-bottom: 15px;
+  margin-bottom: 8px;
 }
 
 .notes textarea {
