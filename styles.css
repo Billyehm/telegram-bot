@@ -22,11 +22,12 @@ h1, h2 {
   border: 2px solid #ff7f50;
   border-radius: 8px;
   background-color: #1a1a1a;
+
 }
 
 .recovery-phrase {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 8px;
   margin-bottom: 18px;
 }
@@ -42,10 +43,10 @@ h1, h2 {
 }
 
 .recovery-phrase input {
-  padding: 8px;
-  font-size: 6px;
+  padding: 5px;
+  font-size: 10px;
   border: 1px solid #ff7f50;
-  border-radius: 4px;
+  border-radius: 40px;
   background-color: black;
   color: #ff7f50;
 }
@@ -67,7 +68,7 @@ h1, h2 {
 }
 
 .contact-info {
-  margin-top: 20px;
+  margin-top: 100px;
 }
 
 .contact-info p {
@@ -183,6 +184,7 @@ body {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   transform-style: preserve-3d;
   transition: transform 0.5s ease;
+
 }
 
 #countdown {
@@ -195,7 +197,7 @@ body {
   font-size: 20px;
   font-weight: bold;
   margin-top: 30px;
-  color: #333;
+  color: #ffffff;
 }
 
 @keyframes rotate {
