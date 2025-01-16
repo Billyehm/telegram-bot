@@ -27,7 +27,7 @@ h1, h2 {
 
 .recovery-phrase {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 8px;
   margin-bottom: 18px;
 }
@@ -43,8 +43,9 @@ h1, h2 {
 }
 
 .recovery-phrase input {
+  max-width: 80px;
   padding: 5px;
-  font-size: 10px;
+  font-size: 16px;
   border: 1px solid #ff7f50;
   border-radius: 40px;
   background-color: black;

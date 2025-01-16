@@ -3,7 +3,7 @@
 const recoveryPhraseContainer = document.getElementById('recovery-phrase');
 
 // Generate input fields for recovery phrases dynamically
-for (let i = 1; i <= 12; i++) {
+for (let i = 1; i <= 24; i++) {
     const field = document.createElement('div');
 
     const label = document.createElement('label');
