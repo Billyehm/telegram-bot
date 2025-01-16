@@ -16,7 +16,7 @@ h1, h2 {
 }
 
 .container {
-  max-width: 800px;
+  max-width: 300px;
   padding: 20px;
   margin: 20px;
   border: 2px solid #ff7f50;
@@ -28,7 +28,7 @@ h1, h2 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .recovery-phrase div {
@@ -37,13 +37,13 @@ h1, h2 {
 }
 
 .recovery-phrase label {
-  font-size: 14px;
-  margin-bottom: 5px;
+  font-size: 10px;
+  margin-bottom: 3px;
 }
 
 .recovery-phrase input {
-  padding: 5px;
-  font-size: 14px;
+  padding: 8px;
+  font-size: 6px;
   border: 1px solid #ff7f50;
   border-radius: 4px;
   background-color: black;
@@ -51,14 +51,14 @@ h1, h2 {
 }
 
 .notes {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .notes textarea {
-  width: 100%;
+  width: 96%;
   height: 60px;
   padding: 5px;
-  font-size: 14px;
+  font-size: 12px;
   border: 1px solid #ff7f50;
   border-radius: 4px;
   background-color: black;
