@@ -17,7 +17,8 @@ h1, h2 {
 
 .container {
   max-width: 300px;
-  padding: 20px;
+  padding: 9px;
+  padding-top: 0px;
   margin: 15px;
   border: 2px solid #ff7f50;
   border-radius: 8px;
