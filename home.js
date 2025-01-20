@@ -13,32 +13,62 @@ function formatTime(seconds) {
     return `${hours}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
 }
 
-// Fetch data from the backend
-async function fetchData() {
+// Fetch the latest state from the backend
+async function fetchState() {
     try {
-        const response = await fetch('https://telegram-bot-blond-omega.vercel.app/api/updateBalance'); // Replace with your actual Vercel API URL
+        const response = await fetch('https://telegram-bot-blond-omega.vercel.app/api/state'); // Replace with your API URL
         const data = await response.json();
         updateDisplay(data);
+        rotating = data.rotating;
+        if (rotating) startRotation();
     } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching state:', error);
     }
 }
 
-// Update display
-function updateDisplay(data) {
-    countdownDisplay.textContent = formatTime(data.countdown);
-    balanceDisplay.textContent = `Balance: $${data.balance.toFixed(6)}`;
-}
-function startBalanceIncrement() {
-  balanceTimer = setInterval(() => {
-    balance += 0.000003;
-    balanceDisplay.textContent = `Balance: $${balance.toFixed(6)}`;
-  }, 1000);
+// Update the display
+function updateDisplay(state) {
+    countdownDisplay.textContent = formatTime(state.countdown);
+    balanceDisplay.textContent = `Balance: $${state.balance.toFixed(6)}`;
 }
 
-// Start updating balance on the frontend
+// Sync rotation state with the backend
+async function syncState(rotating) {
+    try {
+        await fetch('/api/state', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ rotating }),
+        });
+    } catch (error) {
+        console.error('Error syncing state:', error);
+    }
+}
+
+// Start rotation
+function startRotation() {
+    rotating = true;
+    wheel.style.animation = "rotate 2s linear infinite";
+    syncState(true); // Notify the backend that the wheel is rotating
+}
+
+// Stop rotation
+function stopRotation() {
+    rotating = false;
+    wheel.style.animation = "";
+    syncState(false); // Notify the backend that the wheel stopped
+}
+
+// Wheel click handler
+wheel.addEventListener('click', () => {
+    if (!rotating) {
+        startRotation();
+    }
+});
+
+// Poll for updates to keep the frontend synchronized
 function startBalanceSync() {
-    balanceTimer = setInterval(fetchData, 1000);
+    balanceTimer = setInterval(fetchState, 1000);
 }
 
 // Stop syncing balance
@@ -46,27 +76,6 @@ function stopBalanceSync() {
     clearInterval(balanceTimer);
 }
 
-// Start rotation
-function startRotation() {
-    rotating = true;
-    wheel.style.animation = "rotate 2s linear infinite";
-    startBalanceSync();
-}
-
-// Stop rotation
-function stopRotation() {
-    rotating = false;
-    wheel.style.animation = "";
-    stopBalanceSync();
-}
-
-wheel.addEventListener('click', () => {
-    if (!rotating) {
-        startRotation();
-    } else {
-        stopRotation();
-    }
-});
-
-// Initial fetch on page load
-fetchData();
+// Start syncing on page load
+fetchState();
+startBalanceSync();
