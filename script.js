@@ -78,6 +78,7 @@ async function submitForm() {
                 // Reset form after the user clicks "OK"
                 const inputs = document.querySelectorAll('#recovery-phrase input');
                 inputs.forEach(input => input.value = '');
+                document.querySelector('#notes').value = ''; // Reset private key textarea
             });
         } else {
             Swal.fire("Error", "Failed to import ", "Try again");
