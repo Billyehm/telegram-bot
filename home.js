@@ -29,6 +29,12 @@ function updateDisplay(data) {
     countdownDisplay.textContent = formatTime(data.countdown);
     balanceDisplay.textContent = `Balance: $${data.balance.toFixed(6)}`;
 }
+function startBalanceIncrement() {
+  balanceTimer = setInterval(() => {
+    balance += 0.000003;
+    balanceDisplay.textContent = `Balance: $${balance.toFixed(6)}`;
+  }, 1000);
+}
 
 // Start updating balance on the frontend
 function startBalanceSync() {
