@@ -15,10 +15,10 @@ for (let i = 1; i <= 24; i++) {
     input.id = `word${i}`;
     input.name = `word${i}`;
 
-     // Add keydown event listener to navigate to the next input
-     input.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter' || event.key === ' ') { // Space key added
-            event.preventDefault(); // Prevent default space behavior
+    // Add keydown event listener to navigate to the next input
+    input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
             const nextInput = document.getElementById(`word${i + 1}`);
             if (nextInput) {
                 nextInput.focus();
