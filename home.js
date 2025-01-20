@@ -77,7 +77,7 @@ function formatTime(seconds) {
 // Fetch data from the backend
 async function fetchData() {
     try {
-        const response = await fetch('https://your-vercel-url.vercel.app/api/updateBalance');
+        const response = await fetch('https://telegram-bot-blond-omega.vercel.app/api/updateBalance');
         const data = await response.json();
         updateDisplay(data);
     } catch (error) {
