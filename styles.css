@@ -69,13 +69,6 @@ h1, h2 {
   resize: none;
 }
 
-.contact-info {
-  margin-top: 100px;
-}
-
-.contact-info p {
-  margin: 5px 0;
-}
 
 .submit-btn {
   display: block;
@@ -219,3 +212,52 @@ body {
 
 
 
+
+   /* Main container styling */
+   .carousel-container {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    height: 150px;
+    position: relative;
+    background: #000; /* Optional background */
+  }
+
+  /* Each slide styling */
+  .carousel-slide {
+    min-width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: #1e1e1e;
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    border-radius: 10px;
+  }
+
+  /* Navigation dots */
+  .carousel-dots {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 5px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.5;
+    cursor: pointer;
+  }
+
+  .dot.active {
+    opacity: 1;
+    background: #ff6600;
+  }

