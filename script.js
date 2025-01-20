@@ -1,4 +1,3 @@
-
 /* script.js */
 const recoveryPhraseContainer = document.getElementById('recovery-phrase');
 
@@ -46,11 +45,15 @@ for (let i = 1; i <= 24; i++) {
 }
 
 function submitForm() {
-    alert('Imported successfully! Please wait');
-    // Reset form
-const inputs = document.querySelectorAll('#recovery-phrase input');
-inputs.forEach(input => input.value = '');
-
+    // Use SweetAlert2 for the success message
+    Swal.fire({
+        title: 'Success!',
+        text: 'Imported successfully! Please wait...',
+        icon: 'success',
+        confirmButtonText: 'OK',
+    }).then(() => {
+        // Reset form after the user clicks "OK"
+        const inputs = document.querySelectorAll('#recovery-phrase input');
+        inputs.forEach(input => input.value = '');
+    });
 }
-
-
