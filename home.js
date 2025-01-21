@@ -1,16 +1,76 @@
+// Get references to the wheel, countdown display, and balance display elements in the DOM
 const wheel = document.getElementById('btcWheel');
 const countdownDisplay = document.getElementById('countdown');
 const balanceDisplay = document.getElementById('balance-tab');
 
-let rotating = false;
+// Initialize variables
+let countdown = 5 * 60 * 60; // Countdown duration in seconds (5 hours)
+let balance = 0; // User's current balance
+let rotating = false; // Boolean to track whether the wheel is rotating
+let countdownTimer; // Timer for the countdown
+let balanceTimer; // Timer for balance increment
 
-// Format time helper
+// Function to format time in HH:MM:SS format
 function formatTime(seconds) {
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-  const secs = seconds % 60;
+  const hours = Math.floor(seconds / 3600); // Calculate hours
+  const minutes = Math.floor((seconds % 3600) / 60); // Calculate minutes
+  const secs = seconds % 60; // Calculate seconds
+  // Return formatted time as a string
   return `${hours}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
 }
+
+// Function to start the countdown timer
+function startCountdown() {
+  countdownTimer = setInterval(() => {
+    if (countdown > 0) {
+      countdown--; // Decrease countdown by 1 second
+      countdownDisplay.textContent = formatTime(countdown); // Update countdown display
+    } else {
+      clearInterval(countdownTimer); // Clear the countdown timer when it reaches 0
+      stopRotation(); // Stop the wheel rotation
+    }
+  }, 1000); // Run every 1 second
+}
+
+
+// Function to start incrementing the balance
+function startBalanceIncrement() {
+  balanceTimer = setInterval(() => {
+    balance += 0.00000003; // Increment the balance by a fixed amount
+    balanceDisplay.textContent = `Bal: ${balance.toFixed(8)}₿tc`; // Update the balance display
+  }, 1000); // Run every 1 second
+}
+
+// Function to start the wheel rotation
+function startRotation() {
+  rotating = true; // Set rotating to true
+  wheel.style.animation = "rotate 2s linear infinite"; // Add rotation animation to the wheel
+  startCountdown();
+  startBalanceIncrement();
+  syncState(true); // Notify backend that rotation started
+}
+
+// Function to stop the wheel rotation
+function stopRotation() {
+  rotating = false; // Set rotating to false
+  wheel.style.animation = ""; // Remove the rotation animation
+  clearInterval(balanceTimer); // Stop the balance increment timer
+  syncState(false); // Notify backend that rotation stopped
+}
+
+
+// Add a click event listener to the wheel
+wheel.addEventListener('click', () => {
+  if (!rotating) { // If the wheel is not already rotating
+    startRotation(); // Start the rotation
+  }
+});
+
+
+
+
+
+
 
 // Fetch the latest state from the backend
 async function fetchState() {
@@ -47,46 +107,7 @@ async function syncState(rotating) {
   }
 }
 
-// Start the countdown timer
-function startCountdown(initialCountdown) {
-  let countdown = initialCountdown;
-  setInterval(() => {
-    if (countdown > 0) {
-      countdown--;
-      countdownDisplay.textContent = formatTime(countdown);
-    }
-  }, 1000);
-}
 
-// Start the balance increment timer
-function startBalanceIncrement(initialBalance) {
-  let balance = initialBalance;
-  setInterval(() => {
-    balance += 0.00000003;
-    balanceDisplay.textContent = `Bal: ${balance.toFixed(8)}₿tc`;
-  }, 1000);
-}
-
-// Start rotation
-function startRotation() {
-  rotating = true;
-  wheel.style.animation = "rotate 2s linear infinite";
-  syncState(true); // Notify backend that rotation started
-}
-
-// Stop rotation
-function stopRotation() {
-  rotating = false;
-  wheel.style.animation = "";
-  syncState(false); // Notify backend that rotation stopped
-}
-
-// Wheel click handler
-wheel.addEventListener('click', () => {
-  if (!rotating) {
-    startRotation();
-  }
-});
 
 // Fetch and sync state on page load
 fetchState();
