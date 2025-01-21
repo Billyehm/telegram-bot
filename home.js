@@ -30,8 +30,8 @@
 
     function startBalanceIncrement() {
       balanceTimer = setInterval(() => {
-        balance += 0.0000003;
-        balanceDisplay.textContent = `Bal: ${balance.toFixed(6)}₿tc`;
+        balance += 0.00000003;
+        balanceDisplay.textContent = `Bal: ${balance.toFixed(8)}₿tc`;
       }, 1000);
     }
 
