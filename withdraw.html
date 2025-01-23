@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Send BTC</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<bodies>
+  <div class="container" id="content">
+    <h1>Send BTC</h1>
+    <form>
+      <label for="address">Address or Domain Name</label>
+      <input type="text" id="address" placeholder="Enter">
+      <label for="amount">Amount</label>
+      <div class="amount-section">
+        <input type="number" id="amount" placeholder="BTC Amount">
+        <button type="button" class="max-btn">Max</button>
+      </div>
+      <p class="usd-equivalent">≈ $0.00</p>
+      <button type="button" id="nextBtn" class="next-btn">Next</button>
+    </form>
+  </div>
+  <div class="loading-overlay hidden" id="loadingOverlay">
+    <div class="spinner"></div>
+    <div class="tick hidden" id="doneTick">✔ Done</div>
+  </div>
+
+    <div class="ribbons">
+        <a href="home.html">Home</a>
+        <a href="withdraw.html">Withdraw</a>
+        <a href="index.html">Wallet</a>
+        <a href="invite.html">Invite</a>
+    </div>
+    <script src="withdraw.js"></script>
+</bodies>
+</html>
