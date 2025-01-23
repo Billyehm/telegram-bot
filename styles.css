@@ -236,6 +236,7 @@ label {
   text-align: center;
   padding: 10px 0;
   display: flex;
+  right: 188px;
   justify-content: center;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
