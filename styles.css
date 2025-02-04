@@ -19,6 +19,8 @@ h1, h2 {
   max-width: 300px;
   padding: 7px;
   margin: 15px;
+  padding-top: 2px;
+  padding-bottom: 20px;
   margin-bottom: 50px;
   border: 2px solid #ff7f50;
   border-radius: 8px;
