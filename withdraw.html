@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Send BTC</title>
+
+  <!-- Google Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
   <link rel="stylesheet" href="styles.css">
 </head>
 <bodies>
@@ -26,12 +30,22 @@
     <div class="tick hidden" id="doneTick">✔ Done</div>
   </div>
 
-    <div class="ribbons">
-        <a href="home.html">Home</a>
-        <a href="withdraw.html">Withdraw</a>
-        <a href="index.html">Wallet</a>
-        <a href="invite.html">Invite</a>
-    </div>
+
+    <!-- Bottom Ribbon with Icons -->
+    <div class="ribbon">
+      <a href="home.html">
+          <i class="material-icons">home</i> Home
+      </a>
+      <a href="withdraw.html">
+          <i class="material-icons">account_balance_wallet</i> Withdraw
+      </a>
+      <a href="index.html">
+          <i class="material-icons">wallet</i> Wallet
+      </a>
+      <a href="invite.html">
+          <i class="material-icons">group_add</i> Invite
+      </a>
+  </div>
     <script src="withdraw.js"></script>
 </bodies>
 </html>
