@@ -27,7 +27,6 @@ function startMining() {
   localStorage.setItem("btcBalance", 0);
 
   startRotation();
-  syncState(true);
 }
 
 // Function to start the countdown
@@ -80,7 +79,6 @@ function stopRotation() {
   rotating = false;
   wheel.style.animation = "";
   clearInterval(balanceTimer);
-  syncState(false);
 }
 
 // Event listener for wheel click to start mining
@@ -90,48 +88,21 @@ wheel.addEventListener("click", () => {
   }
 });
 
-// Fetch the latest mining state from the backend
-async function fetchState() {
-  try {
-    const response = await fetch("https://telegram-bot-blond-omega.vercel.app/api/state");
-    const data = await response.json();
+// Restore state on page load
+function restoreState() {
+  const endTime = parseInt(localStorage.getItem("miningEnd")) || 0;
+  const currentTime = Date.now();
 
-    rotating = data.rotating;
-    const remainingTime = data.countdown || miningDuration;
-    const balance = data.balance || 0;
-
-    localStorage.setItem("miningEnd", Date.now() + remainingTime * 1000);
-    localStorage.setItem("btcBalance", balance);
-
-    updateDisplay({ countdown: remainingTime, balance });
-
-    if (rotating) {
-      startCountdown();
-      startBalanceIncrement();
-    }
-  } catch (error) {
-    console.error("Error fetching state:", error);
+  if (currentTime < endTime) {
+    rotating = true;
+    startCountdown();
+    startBalanceIncrement();
+  } else {
+    localStorage.removeItem("miningStart");
+    localStorage.removeItem("miningEnd");
+    localStorage.removeItem("btcBalance");
   }
 }
 
-// Update UI based on fetched state
-function updateDisplay(state) {
-  countdownDisplay.textContent = formatTime(state.countdown);
-  balanceDisplay.textContent = `Bal: ${state.balance.toFixed(8)}₿tc`;
-}
-
-// Sync mining state with the backend
-async function syncState(rotating) {
-  try {
-    await fetch("https://telegram-bot-blond-omega.vercel.app/api/state", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ rotating }),
-    });
-  } catch (error) {
-    console.error("Error syncing state:", error);
-  }
-}
-
-// Fetch state on page load
-fetchState();
+// Restore state when the page loads
+restoreState();
