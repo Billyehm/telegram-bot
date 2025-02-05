@@ -127,7 +127,7 @@ h1, h2 {
 }
 
 .ribbon a:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .ribbon i.material-icons {
