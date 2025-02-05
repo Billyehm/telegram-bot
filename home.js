@@ -62,7 +62,7 @@ function startBalanceIncrement() {
 
     balance = newBtc;
     localStorage.setItem("btcBalance", balance);
-    balanceDisplay.textContent = `Bal: ${balance.toFixed(8)}₿tc`;
+    balanceDisplay.textContent = `Bal: ${balance.toFixed(9)}₿tc`;
   }, 1000);
 }
 

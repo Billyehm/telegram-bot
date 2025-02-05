@@ -7,9 +7,9 @@ document.getElementById('nextBtn').addEventListener('click', () => {
   content.style.filter = 'blur(5px)';
   loadingOverlay.classList.remove('hidden');
 
-  // Simulate a 20-second process
+  // Simulate a 15-second process
   setTimeout(() => {
     document.querySelector('.spinner').classList.add('hidden');
     doneTick.classList.remove('hidden');
-  }, 20000);
+  }, 15000);
 });
