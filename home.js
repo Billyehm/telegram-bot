@@ -43,6 +43,33 @@ function startCountdown() {
   }, 1000);
 }
 
+// Function to start the mining process
+function startMining() {
+  const startTime = Date.now();
+  const endTime = startTime + miningDuration * 1000;
+
+  localStorage.setItem("miningStart", startTime);
+  localStorage.setItem("miningEnd", endTime);
+
+  startRotation(); // Start rotation right when mining starts
+  startCountdown(); // Start countdown
+  startBalanceIncrement(); // Start balance increment
+}
+
+// Function to start the countdown
+function startCountdown() {
+  countdownTimer = setInterval(() => {
+    const endTime = parseInt(localStorage.getItem("miningEnd"));
+    const remainingTime = Math.max(0, Math.floor((endTime - Date.now()) / 1000));
+
+    if (remainingTime > 0) {
+      countdownDisplay.textContent = formatTime(remainingTime);
+    } else {
+      clearInterval(countdownTimer); // Clear countdown when finished
+    }
+  }, 1000);
+}
+
 // Function to start increasing the balance
 function startBalanceIncrement() {
   balanceTimer = setInterval(() => {
@@ -51,8 +78,7 @@ function startBalanceIncrement() {
     let balance = parseFloat(localStorage.getItem("btcBalance")) || 0;
 
     if (Date.now() >= endTime) {
-      clearInterval(balanceTimer);
-      stopRotation();
+      clearInterval(balanceTimer); // Stop balance increment after the mining ends
       return;
     }
 
@@ -68,15 +94,13 @@ function startBalanceIncrement() {
 // Function to start the wheel rotation
 function startRotation() {
   rotating = true;
-  wheel.style.animation = "rotate 2s linear infinite";
-  startCountdown();
-  startBalanceIncrement();
+  wheel.style.animation = "rotate 2s linear infinite"; // Keep rotating the wheel during countdown
 }
 
 // Function to stop the wheel rotation
 function stopRotation() {
   rotating = false;
-  wheel.style.animation = "";
+  wheel.style.animation = ""; // Stop the animation when mining ends
   clearInterval(balanceTimer);
 }
 
@@ -99,6 +123,7 @@ function restoreState() {
     rotating = true;
     startCountdown();
     startBalanceIncrement();
+    startRotation(); // Ensure the wheel keeps rotating if the countdown is ongoing
   }
 }
 
