@@ -127,7 +127,8 @@ h1, h2 {
 }
 
 .ribbon a:hover {
-  text-decoration: none;
+  text-shadow: 0px 0px 10px #000000;
+  color: #ff4500;
 }
 
 .ribbon i.material-icons {
@@ -242,6 +243,7 @@ label {
   bottom: 10px;
   width: 100%;
   align-self: center;
+  align-items: center;
   max-width: 330px;
   background-color: #ff7f50;
   text-align: center;
@@ -270,8 +272,6 @@ label {
   font-size: 30px;
   margin-bottom: -1px;
 }
-
-
 
 input {
   padding: 10px;
