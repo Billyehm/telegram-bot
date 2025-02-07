@@ -50,20 +50,20 @@ function startCountdown() {
 function updateBalance() {
   const startTime = parseInt(localStorage.getItem("miningStart")) || 0;
   const endTime = parseInt(localStorage.getItem("miningEnd")) || 0;
-  let balance = parseFloat(localStorage.getItem("btcBalance")) || 0;
+  let previousBalance = parseFloat(localStorage.getItem("btcBalance")) || 0; // Retrieve existing balance
 
   if (Date.now() < startTime) return; // Mining hasn't started yet
 
-  // Calculate elapsed time since mining started (or since last update)
+  // Calculate elapsed time since mining started
   const elapsedSeconds = Math.min((Date.now() - startTime) / 1000, miningDuration);
 
   // Calculate new BTC earned
   let newBtc = elapsedSeconds * btcPerSecond;
 
-  // Update balance
-  balance = newBtc; // Since balance is stored and updated every session, it should be overwritten
-  localStorage.setItem("btcBalance", balance);
-  balanceDisplay.textContent = `Bal: ${balance.toFixed(9)}₿tc`;
+  // Add new BTC earnings to the previous balance
+  let updatedBalance = previousBalance + newBtc;
+  localStorage.setItem("btcBalance", updatedBalance);
+  balanceDisplay.textContent = `Bal: ${updatedBalance.toFixed(9)}₿tc`;
 
   // If mining is still ongoing, update periodically
   if (Date.now() < endTime) {
@@ -94,15 +94,15 @@ wheel.addEventListener("click", () => {
 function restoreState() {
   const endTime = parseInt(localStorage.getItem("miningEnd")) || 0;
   const currentTime = Date.now();
+  let balance = parseFloat(localStorage.getItem("btcBalance")) || 0;
+
+  balanceDisplay.textContent = `Bal: ${balance.toFixed(9)}₿tc`; // Show saved balance
 
   if (currentTime < endTime) {
     rotating = true;
     startRotation();
     startCountdown();
     updateBalance(); // Update BTC balance based on elapsed time
-  } else {
-    localStorage.removeItem("miningStart");
-    localStorage.removeItem("miningEnd");
   }
 }
 
