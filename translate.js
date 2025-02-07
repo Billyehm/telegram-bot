@@ -7,11 +7,18 @@ document.getElementById("languageButton").addEventListener("click", () => {
   const languageLinks = document.querySelectorAll("#languageDropdown a");
   
   languageLinks.forEach(link => {
-    link.addEventListener("click", (event) => {
+    link.addEventListener("click", async (event) => {
       event.preventDefault();
       const selectedLanguage = event.target.getAttribute("data-lang");
-      document.getElementById("languageButton").innerText = event.target.innerText.split(' ')[0]; // Update the flag
-      translatePage(selectedLanguage); // Function to translate the page
+  
+      // Update the flag in the button
+      document.getElementById("languageButton").innerText = event.target.innerText.split(' ')[0];
+  
+      // Translate the page
+      await translatePage(selectedLanguage);
+  
+      // Close the dropdown menu after selecting a language
+      document.getElementById("languageDropdown").classList.remove("show");
     });
   });
   
