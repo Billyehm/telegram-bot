@@ -7,7 +7,6 @@ const miningDuration = 24 * 60 * 60; // 24 hours in seconds
 const btcPerSecond = 0.00000001157; // BTC generation rate per second
 let rotating = false; // Track whether the wheel is rotating
 let countdownTimer; // Timer for countdown
-let balanceTimer; // Timer for balance increment
 
 // Function to format time in HH:MM:SS
 function formatTime(seconds) {
@@ -25,39 +24,15 @@ function startMining() {
   localStorage.setItem("miningStart", startTime);
   localStorage.setItem("miningEnd", endTime);
 
-  startRotation();
-}
-
-// Function to start the countdown
-function startCountdown() {
-  countdownTimer = setInterval(() => {
-    const endTime = parseInt(localStorage.getItem("miningEnd"));
-    const remainingTime = Math.max(0, Math.floor((endTime - Date.now()) / 1000));
-
-    if (remainingTime > 0) {
-      countdownDisplay.textContent = formatTime(remainingTime);
-    } else {
-      clearInterval(countdownTimer);
-      stopRotation();
-    }
-  }, 1000);
-}
-
-// Function to start the mining process
-function startMining() {
-  const startTime = Date.now();
-  const endTime = startTime + miningDuration * 1000;
-
-  localStorage.setItem("miningStart", startTime);
-  localStorage.setItem("miningEnd", endTime);
-
-  startRotation(); // Start rotation right when mining starts
+  startRotation(); // Start rotation when mining starts
   startCountdown(); // Start countdown
-  startBalanceIncrement(); // Start balance increment
+  updateBalance(); // Update balance based on elapsed time
 }
 
 // Function to start the countdown
 function startCountdown() {
+  clearInterval(countdownTimer); // Clear any existing countdown timer
+
   countdownTimer = setInterval(() => {
     const endTime = parseInt(localStorage.getItem("miningEnd"));
     const remainingTime = Math.max(0, Math.floor((endTime - Date.now()) / 1000));
@@ -66,29 +41,34 @@ function startCountdown() {
       countdownDisplay.textContent = formatTime(remainingTime);
     } else {
       clearInterval(countdownTimer); // Clear countdown when finished
+      stopRotation();
     }
   }, 1000);
 }
 
-// Function to start increasing the balance
-function startBalanceIncrement() {
-  balanceTimer = setInterval(() => {
-    const startTime = parseInt(localStorage.getItem("miningStart"));
-    const endTime = parseInt(localStorage.getItem("miningEnd"));
-    let balance = parseFloat(localStorage.getItem("btcBalance")) || 0;
+// Function to update the BTC balance based on elapsed time
+function updateBalance() {
+  const startTime = parseInt(localStorage.getItem("miningStart")) || 0;
+  const endTime = parseInt(localStorage.getItem("miningEnd")) || 0;
+  let balance = parseFloat(localStorage.getItem("btcBalance")) || 0;
 
-    if (Date.now() >= endTime) {
-      clearInterval(balanceTimer); // Stop balance increment after the mining ends
-      return;
-    }
+  if (Date.now() < startTime) return; // Mining hasn't started yet
 
-    const elapsedSeconds = (Date.now() - startTime) / 1000;
-    let newBtc = elapsedSeconds * btcPerSecond;
+  // Calculate elapsed time since mining started (or since last update)
+  const elapsedSeconds = Math.min((Date.now() - startTime) / 1000, miningDuration);
 
-    balance += btcPerSecond; // Increment BTC every second
-    localStorage.setItem("btcBalance", balance);
-    balanceDisplay.textContent = `Bal: ${balance.toFixed(9)}₿tc`;
-  }, 1000);
+  // Calculate new BTC earned
+  let newBtc = elapsedSeconds * btcPerSecond;
+
+  // Update balance
+  balance = newBtc; // Since balance is stored and updated every session, it should be overwritten
+  localStorage.setItem("btcBalance", balance);
+  balanceDisplay.textContent = `Bal: ${balance.toFixed(9)}₿tc`;
+
+  // If mining is still ongoing, update periodically
+  if (Date.now() < endTime) {
+    setTimeout(updateBalance, 1000);
+  }
 }
 
 // Function to start the wheel rotation
@@ -101,7 +81,6 @@ function startRotation() {
 function stopRotation() {
   rotating = false;
   wheel.style.animation = ""; // Stop the animation when mining ends
-  clearInterval(balanceTimer);
 }
 
 // Event listener for wheel click to start mining
@@ -115,15 +94,15 @@ wheel.addEventListener("click", () => {
 function restoreState() {
   const endTime = parseInt(localStorage.getItem("miningEnd")) || 0;
   const currentTime = Date.now();
-  let balance = parseFloat(localStorage.getItem("btcBalance")) || 0;
-
-  balanceDisplay.textContent = `Bal: ${balance.toFixed(9)}₿tc`; // Show saved balance
 
   if (currentTime < endTime) {
     rotating = true;
+    startRotation();
     startCountdown();
-    startBalanceIncrement();
-    startRotation(); // Ensure the wheel keeps rotating if the countdown is ongoing
+    updateBalance(); // Update BTC balance based on elapsed time
+  } else {
+    localStorage.removeItem("miningStart");
+    localStorage.removeItem("miningEnd");
   }
 }
 
