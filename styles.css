@@ -368,7 +368,7 @@ input {
 #languageSelectorContainer {
   position: absolute;
   top: 10px;
-  right: 20vw; /* Always 20% from the right, dynamically adjusting */
+  right: 11vw; /* Always 20% from the right, dynamically adjusting */
   z-index: 10;
 }
 
