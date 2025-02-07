@@ -3,17 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
   <title>free_coin_faucet</title>
 
   <!-- Google Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-
   <link rel="stylesheet" href="styles.css">
-
 </head>
 <body>
+
+<!-- Language Selector Button (Top-right) -->
+<div id="languageSelectorContainer">
+  <button id="languageButton">
+    🇬🇧 <!-- Default Flag (English) -->
+  </button>
+  <div id="languageDropdown" class="dropdown-content">
+    <a href="#" data-lang="en">🇬🇧 English</a>
+    <a href="#" data-lang="es">🇪🇸 Spanish</a>
+    <a href="#" data-lang="fr">🇫🇷 French</a>
+    <a href="#" data-lang="pt">🇵🇹 Portuguese</a>
+    <a href="#" data-lang="nl">🇳🇱 Dutch</a>
+  </div>
+</div>
+
+<!-- Main content -->
 <div class="container">
   <div class="wheel-container">
     <div id="countdown">24:00:00</div>
@@ -24,25 +37,24 @@
   </div>
 </div>
 
-</body>
-</html>
+<!-- Bottom Ribbon with Icons -->
+<div class="ribbon">
+  <a href="home.html">
+      <i class="material-icons">home</i> Home
+  </a>
+  <a href="withdraw.html">
+      <i class="material-icons">account_balance_wallet</i> Withdraw
+  </a>
+  <a href="index.html">
+      <i class="material-icons">wallet</i> Wallet
+  </a>
+  <a href="invite.html">
+      <i class="material-icons">group_add</i> Invite
+  </a>
+</div>
 
+<script src="home.js"></script>
+<script src="translate.js"></script>
 
-    <!-- Bottom Ribbon with Icons -->
-    <div class="ribbon">
-      <a href="home.html">
-          <i class="material-icons">home</i> Home
-      </a>
-      <a href="withdraw.html">
-          <i class="material-icons">account_balance_wallet</i> Withdraw
-      </a>
-      <a href="index.html">
-          <i class="material-icons">wallet</i> Wallet
-      </a>
-      <a href="invite.html">
-          <i class="material-icons">group_add</i> Invite
-      </a>
-  </div>
-    <script src="home.js"></script>
 </body>
 </html>

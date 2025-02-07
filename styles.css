@@ -355,3 +355,79 @@ input {
     transform: rotate(360deg);
   }
 }
+
+
+
+
+
+
+
+
+
+
+/* Language Selector Styles */
+#languageSelectorContainer {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+}
+
+#languageButton {
+  background-color: #fff;
+  border: 1px solid #ff7f50;
+  padding: 0;
+  cursor: pointer;
+  width: 40px; /* Set a fixed width */
+  height: 36px; /* Set a fixed height */
+  text-align: center;
+  font-size: 30px;
+  border-radius: 5px;
+  padding-bottom: 8px;
+  transition: transform 0.3s ease;
+}
+
+#languageButton:hover {
+  transform: scale(1.1); /* Slightly scale up on hover for a better user experience */
+}
+
+#languageDropdown {
+  display: none;
+  position: absolute;
+  top: 60px; /* Adjust to position dropdown below the button */
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  width: 150px; /* Make the dropdown wider for better readability */
+  z-index: 9;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+#languageButton:focus + #languageDropdown, 
+#languageDropdown:hover {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#languageDropdown a {
+  padding: 10px 15px;
+  display: block;
+  text-decoration: none;
+  color: #000000;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#languageDropdown a:hover {
+  background-color: #ff4500;
+  color: #ff7f50;
+}
+
+#languageDropdown a:last-child {
+  border-bottom: none; /* Remove border from the last item */
+}
