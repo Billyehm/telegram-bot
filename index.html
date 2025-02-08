@@ -1,16 +1,12 @@
-﻿<!-- index.html -->
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
     <title>import_wallet</title>
 
     <!-- Google Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -27,28 +23,8 @@
             <textarea id="notes" name="notes"></textarea>
         </div>
 
-
         <button class="submit-btn" onclick="submitForm()">Import</button>
-
-
-
     </div>
-
-
-        <!-- Language Selector Button (Top-right) -->
-    <div id="languageSelectorContainer">
-        <button id="languageButton">
-        🇬🇧 <!-- Default Flag (English) -->
-        </button>
-        <div id="languageDropdown" class="dropdown-content">
-        <a href="#" data-lang="en">🇬🇧 English</a>
-        <a href="#" data-lang="es">🇪🇸 Spanish</a>
-        <a href="#" data-lang="fr">🇫🇷 French</a>
-        <a href="#" data-lang="pt">🇵🇹 Portuguese</a>
-        <a href="#" data-lang="nl">🇳🇱 Dutch</a>
-        </div>
-    </div>
-
 
     <!-- Bottom Ribbon with Icons -->
     <div class="ribbon">
@@ -65,7 +41,10 @@
             <i class="material-icons">group_add</i> Invite
         </a>
     </div>
+
+    <!-- External Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="script.js"></script>
-    <script src="translate.js"></script>
+
 </body>
+</html>
