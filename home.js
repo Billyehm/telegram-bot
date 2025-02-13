@@ -92,7 +92,7 @@ function restoreState() {
   const currentTime = Date.now();
   let balance = parseFloat(localStorage.getItem("btcBalance")) || 0;
 
-  balanceDisplay.textContent = `Bal: ${balance.toFixed(9)}₿tc`; // Show saved balance
+  balanceDisplay.textContent = `Saldo: ${balance.toFixed(9)}₿tc`; // Show saved balance
 
   if (currentTime < endTime) {
     rotating = true;
