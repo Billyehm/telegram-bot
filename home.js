@@ -62,7 +62,7 @@ function startBalanceIncrement() {
 
     balance += btcPerSecond; // ✅ **Increase BTC per second in real-time**
     localStorage.setItem("btcBalance", balance);
-    balanceDisplay.textContent = `Bal: ${balance.toFixed(9)}₿tc`; // ✅ **Update UI instantly**
+    balanceDisplay.textContent = `Saldo: ${balance.toFixed(9)}₿tc`; // ✅ **Update UI instantly**
   }, 1000); // ✅ **Runs every second**
 }
 
