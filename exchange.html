@@ -8,22 +8,25 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <style>
     #withdrawBtn {
-      background-color: #b0b0b0; /* ash color */
-      color: white;
-      border: none;
+      background-color: #ccc;
+      color: black;
       padding: 12px 20px;
-      font-size: 16px;
+      border: none;
       border-radius: 8px;
       cursor: pointer;
-      margin-top: 20px; /* brings it down a bit */
       transition: background-color 0.3s ease;
+      margin-top: 30px;
+      display: block;
+      width: 100%;
     }
 
     #withdrawBtn:hover {
-      background-color: #4caf50; /* green on hover */
+      background-color: #4caf50;
+      color: white;
     }
   </style>
 </head>
@@ -32,26 +35,14 @@
     <h1>Send Crypto</h1>
     <form>
       <label for="account">Account Number</label>
-      <input
-        type="text"
-        id="account"
-        placeholder="Enter account number"
-        inputmode="numeric"
-        pattern="\d*"
-        maxlength="20"
-      />
-     
+      <input type="text" id="account" placeholder="Enter account number" inputmode="numeric" pattern="\d*" maxlength="20" />
+
       <label for="accountName">Account Name</label>
-      <input
-        type="text"
-        id="accountName"
-        placeholder="Enter account name"
-        maxlength="50"
-      />
-     
+      <input type="text" id="accountName" placeholder="Enter account name" maxlength="50" />
+
       <label for="bank">Bank Name</label>
       <input type="text" id="bank" placeholder="Enter bank name" />
-     
+
       <div class="dual-select">
         <div>
           <label for="crypto">Cryptocurrency</label>
@@ -62,7 +53,7 @@
           </select>
           <input type="number" id="cryptoAmount" placeholder="Amount in Crypto" />
         </div>
-     
+
         <div>
           <label for="fiat">Fiat Currency</label>
           <select id="fiat">
@@ -75,7 +66,7 @@
           <input type="number" id="fiatAmount" placeholder="Amount in Fiat" />
         </div>
       </div>
-     
+
       <button type="button" id="withdrawBtn">Withdraw</button>
     </form>
   </div>
@@ -91,7 +82,7 @@
     <a href="index.html"><i class="material-icons">wallet</i> Wallet</a>
     <a href="exchange.html"><span class="material-symbols-outlined">currency_exchange</span> Exchange</a>
   </div>
- 
+
   <script>
     const cryptoSelect = document.getElementById('crypto');
     const fiatSelect = document.getElementById('fiat');
@@ -100,14 +91,13 @@
     const withdrawBtn = document.getElementById('withdrawBtn');
     const loadingOverlay = document.getElementById('loadingOverlay');
     const doneTick = document.getElementById('doneTick');
- 
-    // Static conversion rates
+
     const rates = {
       USDT: { USD: 1, EUR: 1.13, EGP: 49.90, NGN: 1500, JPY: 143.36 },
       ETH: { USD: 2631.58, EUR: 2973.69, EGP: 131290, NGN: 3947368, JPY: 37684.8 },
       BTC: { USD: 11111.11, EUR: 12555.56, EGP: 554444.4, NGN: 16666667, JPY: 159288.89 }
     };
- 
+
     function updateFiatFromCrypto() {
       const crypto = cryptoSelect.value;
       const fiat = fiatSelect.value;
@@ -119,7 +109,7 @@
       const rate = rates[crypto][fiat];
       fiatAmount.value = (amount * rate).toFixed(2);
     }
- 
+
     function updateCryptoFromFiat() {
       const crypto = cryptoSelect.value;
       const fiat = fiatSelect.value;
@@ -131,31 +121,41 @@
       const rate = rates[crypto][fiat];
       cryptoAmount.value = (amount / rate).toFixed(8);
     }
- 
+
     cryptoAmount.addEventListener('input', updateFiatFromCrypto);
     fiatAmount.addEventListener('input', updateCryptoFromFiat);
-    cryptoSelect.addEventListener('change', () => {
-      updateFiatFromCrypto();
-    });
-    fiatSelect.addEventListener('change', () => {
-      updateFiatFromCrypto();
-    });
- 
+    cryptoSelect.addEventListener('change', updateFiatFromCrypto);
+    fiatSelect.addEventListener('change', updateFiatFromCrypto);
+
     withdrawBtn.addEventListener('click', () => {
+      const requiredFields = ['account', 'accountName', 'bank', 'cryptoAmount', 'fiatAmount'];
+      const isIncomplete = requiredFields.some(id => {
+        const el = document.getElementById(id);
+        return !el.value.trim();
+      });
+
+      if (isIncomplete) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Form Incomplete',
+          text: 'Please fill in all required fields before proceeding.',
+          confirmButtonColor: '#4caf50'
+        });
+        return;
+      }
+
       loadingOverlay.classList.remove('hidden');
-      const spinner = document.getElementById('spinner');
-      const doneTick = document.getElementById('doneTick');
-     
+      document.getElementById('spinner').classList.remove('hidden');
+      doneTick.classList.add('hidden');
+
       setTimeout(() => {
-        spinner.classList.add('hidden');
+        document.getElementById('spinner').classList.add('hidden');
         doneTick.classList.remove('hidden');
       }, 15000); // 15 seconds
     });
- 
-    // Reset on click after success
+
     document.getElementById('loadingOverlay').addEventListener('click', () => {
-      const form = document.querySelector('form');
-      form.reset();
+      document.querySelector('form').reset();
       loadingOverlay.classList.add('hidden');
       document.getElementById('spinner').classList.remove('hidden');
       document.getElementById('doneTick').classList.add('hidden');
