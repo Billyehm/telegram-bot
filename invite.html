@@ -1,40 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Invite Friends</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Send Crypto</title>
 
-    <!-- Google Material Icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
+  <div class="container" id="content">
+    <h1>Send Crypto</h1>
+    <form>
+      <label for="account">Account Number</label>
+      <input type="text" id="account" placeholder="Enter account number" />
 
+      <label for="bank">Bank Name</label>
+      <input type="text" id="bank" placeholder="Enter bank name" />
 
-    <div class="page-container">
-        <h1 class="coming-soon">Muy pronto</h1>
-    </div>
+      <div class="dual-select">
+        <div>
+          <label for="crypto">Cryptocurrency</label>
+          <select id="crypto">
+            <option value="BTC">BTC</option>
+            <option value="ETH">ETH</option>
+            <option value="USDT">USDT</option>
+          </select>
+          <input type="number" id="cryptoAmount" placeholder="Amount in Crypto" />
+        </div>
 
-    <!-- Bottom Ribbon with Icons -->
-    <div class="ribbon">
-        <a href="home.html">
-            <i class="material-icons">home</i> Hogar
-        </a>
-        <a href="withdraw.html">
-            <i class="material-icons">account_balance_wallet</i> Retirar
-        </a>
-        <a href="index.html">
-            <i class="material-icons">wallet</i> Billetera
-        </a>
-        <a href="invite.html">
-            <i class="material-icons">group_add</i> Invitar
-        </a>
-    </div>
+        <div>
+          <label for="fiat">Fiat Currency</label>
+          <select id="fiat" disabled>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+            <option value="NGN">NGN</option>
+            <option value="JPY">JPY</option>
+          </select>
+          <input type="text" id="fiatAmount" placeholder="Equivalent in Fiat" readonly />
+        </div>
+      </div>
 
-    <script src="invite.js"></script>
+      <button type="button" id="withdrawBtn">Withdraw</button>
+    </form>
+  </div>
 
+  <div class="loading-overlay hidden" id="loadingOverlay">
+    <div class="spinner"></div>
+    <div class="tick hidden" id="doneTick">✔ Done</div>
+  </div>
+
+  <div class="ribbons">
+    <a href="home.html"><i class="material-icons">home</i> Home</a>
+    <a href="withdraw.html"><i class="material-icons">account_balance_wallet</i> Withdraw</a>
+    <a href="index.html"><i class="material-icons">wallet</i> Wallet</a>
+    <a href="invite.html"><i class="material-icons">group_add</i> Invite</a>
+  </div>
+
+  <script>
+    const cryptoSelect = document.getElementById('crypto');
+    const fiatSelect = document.getElementById('fiat');
+    const cryptoAmount = document.getElementById('cryptoAmount');
+    const fiatAmount = document.getElementById('fiatAmount');
+    const withdrawBtn = document.getElementById('withdrawBtn');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    const doneTick = document.getElementById('doneTick');
+
+    async function fetchRate(crypto, fiat) {
+      const res = await fetch(`https://api.exchangerate.host/convert?from=${crypto}&to=${fiat}`);
+      const data = await res.json();
+      return data.info?.rate || 0;
+    }
+
+    async function updateConversion() {
+      const crypto = cryptoSelect.value;
+      const fiat = fiatSelect.value;
+      const amount = parseFloat(cryptoAmount.value);
+      if (isNaN(amount)) {
+        fiatAmount.value = '';
+        return;
+      }
+      const rate = await fetchRate(crypto, fiat);
+      fiatAmount.value = (amount * rate).toFixed(2);
+    }
+
+    cryptoAmount.addEventListener('input', updateConversion);
+    cryptoSelect.addEventListener('change', updateConversion);
+    fiatSelect.addEventListener('change', updateConversion);
+
+    withdrawBtn.addEventListener('click', () => {
+      loadingOverlay.classList.remove('hidden');
+      setTimeout(() => {
+        loadingOverlay.classList.add('hidden');
+        doneTick.classList.remove('hidden');
+        setTimeout(() => {
+          doneTick.classList.add('hidden');
+        }, 2000);
+      }, 2500);
+    });
+  </script>
 </body>
-</html>
+        </html>
