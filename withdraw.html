@@ -10,43 +10,41 @@
 
   <link rel="stylesheet" href="styles.css">
 </head>
-<bodies>
+<body>
   <div class="container" id="content">
-    <h1>Enviar BTC</h1>
+    <h1>Send BTC</h1>
     <form>
-      <label for="address">Dirección o nombre de dominio</label>
-      <input type="text" id="address" placeholder="Entra aquí">
-      <label for="amount">Cantidad</label>
+      <label for="address">Address or Domain Name</label>
+      <input type="text" id="address" placeholder="Enter here">
+      <label for="amount">Amount</label>
       <div class="amount-section">
-        <input type="number" id="amount" placeholder="Cantidad de BTC">
-        <button type="button" class="max-btn">Máximo</button>
+        <input type="number" id="amount" placeholder="Amount in BTC">
+        <button type="button" class="max-btn">Max</button>
       </div>
       <p class="usd-equivalent">≈ $0.00</p>
-      <button type="button" id="nextBtn" class="next-btn">Próximo</button>
+      <button type="button" id="nextBtn" class="next-btn">Next</button>
     </form>
   </div>
   <div class="loading-overlay hidden" id="loadingOverlay">
     <div class="spinner"></div>
-    <div class="tick hidden" id="doneTick">✔ Hecho</div>
+    <div class="tick hidden" id="doneTick">✔ Done</div>
   </div>
 
-
-
-    <!-- Bottom Ribbon with Icons -->
-    <div class="ribbons">
-      <a href="home.html">
-          <i class="material-icons">home</i> Hogar
-      </a>
-      <a href="withdraw.html">
-          <i class="material-icons">account_balance_wallet</i> Retirar
-      </a>
-      <a href="index.html">
-          <i class="material-icons">wallet</i> Billetera
-      </a>
-      <a href="invite.html">
-          <i class="material-icons">group_add</i> Invitar
-      </a>
+  <!-- Bottom Ribbon with Icons -->
+  <div class="ribbons">
+    <a href="home.html">
+        <i class="material-icons">home</i> Home
+    </a>
+    <a href="withdraw.html">
+        <i class="material-icons">account_balance_wallet</i> Withdraw
+    </a>
+    <a href="index.html">
+        <i class="material-icons">wallet</i> Wallet
+    </a>
+    <a href="exchange.html">
+        <span class="material-icons">currency_exchange</span> Exchange
+    </a>
   </div>
-    <script src="withdraw.js"></script>
-</bodies>
-</html>
+  <script src="withdraw.js"></script>
+</body>
+  </html>
