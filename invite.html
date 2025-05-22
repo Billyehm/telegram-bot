@@ -13,11 +13,29 @@
   <div class="container" id="content">
     <h1>Send Crypto</h1>
     <form>
-      <label for="account">Account Number</label>
-      <input type="text" id="account" placeholder="Enter account number" />
+  <label for="account">Account Number</label>
+  <input
+    type="text"
+    id="account"
+    placeholder="Enter account number"
+    inputmode="numeric"
+    pattern="\d*"
+    maxlength="20"
+  />
 
-      <label for="bank">Bank Name</label>
-      <input type="text" id="bank" placeholder="Enter bank name" />
+  <label for="accountName">Account Name</label>
+  <input
+    type="text"
+    id="accountName"
+    placeholder="Enter account name"
+    maxlength="50"
+  />
+
+  <label for="bank">Bank Name</label>
+  <input type="text" id="bank" placeholder="Enter bank name" />
+
+  <!-- Rest of your form unchanged -->
+    </form>
 
       <div class="dual-select">
         <div>
