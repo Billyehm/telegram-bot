@@ -66,8 +66,8 @@
   </div>
 
   <div class="loading-overlay hidden" id="loadingOverlay">
-    <div class="spinner"></div>
-    <div class="tick hidden" id="doneTick">✔ Done</div>
+  <div class="spinner" id="spinner"></div>
+  <div class="success-message hidden" id="doneTick">✓ SUCCESSFUL</div>
   </div>
 
   <div class="ribbons">
@@ -127,15 +127,24 @@
     });
 
     withdrawBtn.addEventListener('click', () => {
-      loadingOverlay.classList.remove('hidden');
-      setTimeout(() => {
-        loadingOverlay.classList.add('hidden');
-        doneTick.classList.remove('hidden');
-        setTimeout(() => {
-          doneTick.classList.add('hidden');
-        }, 2000);
-      }, 2500);
-    });
+  loadingOverlay.classList.remove('hidden');
+  const spinner = document.getElementById('spinner');
+  const doneTick = document.getElementById('doneTick');
+
+  setTimeout(() => {
+    spinner.classList.add('hidden');
+    doneTick.classList.remove('hidden');
+  }, 15000); // 15 seconds
+});
+
+// Reset on click after success
+document.getElementById('loadingOverlay').addEventListener('click', () => {
+  const form = document.querySelector('form');
+  form.reset();
+  loadingOverlay.classList.add('hidden');
+  document.getElementById('spinner').classList.remove('hidden');
+  document.getElementById('doneTick').classList.add('hidden');
+});
   </script>
 </body>
 </html>
