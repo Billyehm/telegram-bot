@@ -47,7 +47,7 @@ function startCountdown() {
   }, 1000);
 }
 
-// 🚀 Function to update BTC **every second in real-time**
+// Function to update BTC **every second in real-time**
 function startBalanceIncrement() {
   clearInterval(balanceTimer); // Clear previous balance updates if any
 
@@ -62,7 +62,7 @@ function startBalanceIncrement() {
 
     balance += btcPerSecond; // ✅ **Increase BTC per second in real-time**
     localStorage.setItem("btcBalance", balance);
-    balanceDisplay.textContent = `Saldo: ${balance.toFixed(9)}₿tc`; // ✅ **Update UI instantly**
+    balanceDisplay.textContent = `Balance: ${balance.toFixed(9)}₿TC`; // ✅ **Update UI instantly**
   }, 1000); // ✅ **Runs every second**
 }
 
@@ -92,7 +92,7 @@ function restoreState() {
   const currentTime = Date.now();
   let balance = parseFloat(localStorage.getItem("btcBalance")) || 0;
 
-  balanceDisplay.textContent = `Saldo: ${balance.toFixed(9)}₿tc`; // Show saved balance
+  balanceDisplay.textContent = `Balance: ${balance.toFixed(9)}₿TC`; // Show saved balance
 
   if (currentTime < endTime) {
     rotating = true;
