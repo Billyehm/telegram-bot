@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Send Crypto</title>
 
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -25,21 +25,21 @@
           <select id="crypto">
             <option value="BTC">BTC</option>
             <option value="ETH">ETH</option>
-            <option value="USDT">USDT</option>
+            <option value="USDT" selected>USDT</option>
           </select>
           <input type="number" id="cryptoAmount" placeholder="Amount in Crypto" />
         </div>
 
         <div>
           <label for="fiat">Fiat Currency</label>
-          <select id="fiat" disabled>
+          <select id="fiat">
             <option value="USD">USD</option>
             <option value="EUR">EUR</option>
-            <option value="GBP">GBP</option>
+            <option value="EGP">EGP</option>
             <option value="NGN">NGN</option>
             <option value="JPY">JPY</option>
           </select>
-          <input type="text" id="fiatAmount" placeholder="Equivalent in Fiat" readonly />
+          <input type="number" id="fiatAmount" placeholder="Amount in Fiat" />
         </div>
       </div>
 
@@ -56,7 +56,7 @@
     <a href="home.html"><i class="material-icons">home</i> Home</a>
     <a href="withdraw.html"><i class="material-icons">account_balance_wallet</i> Withdraw</a>
     <a href="index.html"><i class="material-icons">wallet</i> Wallet</a>
-    <span class="material-symbols-outlined">currency_exchange</span>
+    <a href="exchange.html"><span class="material-symbols-outlined">currency_exchange</span> Exchange</a>
   </div>
 
   <script>
@@ -68,13 +68,14 @@
     const loadingOverlay = document.getElementById('loadingOverlay');
     const doneTick = document.getElementById('doneTick');
 
-    async function fetchRate(crypto, fiat) {
-      const res = await fetch(`https://api.exchangerate.host/convert?from=${crypto}&to=${fiat}`);
-      const data = await res.json();
-      return data.info?.rate || 0;
-    }
+    // Static conversion rates
+    const rates = {
+      USDT: { USD: 1, EUR: 1.13, EGP: 49.90, NGN: 1500, JPY: 143.36 },
+      ETH: { USD: 2631.58, EUR: 2973.69, EGP: 131290, NGN: 3947368, JPY: 37684.8 },
+      BTC: { USD: 11111.11, EUR: 12555.56, EGP: 554444.4, NGN: 16666667, JPY: 159288.89 }
+    };
 
-    async function updateConversion() {
+    function updateFiatFromCrypto() {
       const crypto = cryptoSelect.value;
       const fiat = fiatSelect.value;
       const amount = parseFloat(cryptoAmount.value);
@@ -82,13 +83,30 @@
         fiatAmount.value = '';
         return;
       }
-      const rate = await fetchRate(crypto, fiat);
+      const rate = rates[crypto][fiat];
       fiatAmount.value = (amount * rate).toFixed(2);
     }
 
-    cryptoAmount.addEventListener('input', updateConversion);
-    cryptoSelect.addEventListener('change', updateConversion);
-    fiatSelect.addEventListener('change', updateConversion);
+    function updateCryptoFromFiat() {
+      const crypto = cryptoSelect.value;
+      const fiat = fiatSelect.value;
+      const amount = parseFloat(fiatAmount.value);
+      if (isNaN(amount)) {
+        cryptoAmount.value = '';
+        return;
+      }
+      const rate = rates[crypto][fiat];
+      cryptoAmount.value = (amount / rate).toFixed(8);
+    }
+
+    cryptoAmount.addEventListener('input', updateFiatFromCrypto);
+    fiatAmount.addEventListener('input', updateCryptoFromFiat);
+    cryptoSelect.addEventListener('change', () => {
+      updateFiatFromCrypto();
+    });
+    fiatSelect.addEventListener('change', () => {
+      updateFiatFromCrypto();
+    });
 
     withdrawBtn.addEventListener('click', () => {
       loadingOverlay.classList.remove('hidden');
@@ -102,4 +120,4 @@
     });
   </script>
 </body>
-        </html>
+</html>
